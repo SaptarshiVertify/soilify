@@ -115,7 +115,7 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
       </Flex>
       <Divider />
       {/* Visualization options */}
-      <Flex alignItems={"center"}>
+      <Flex alignItems={"center"} m={1}>
         <Text fontWeight={300}>Visualize:</Text>
         <Spacer />
         <Select
