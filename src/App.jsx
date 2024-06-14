@@ -251,7 +251,7 @@ function App() {
             position={"absolute"}
             zIndex={1}
             maxH={"35vh"}
-            w={"25%"}
+            w={"30%"}
             overflowY={"auto"}
             borderRadius={5}
           >

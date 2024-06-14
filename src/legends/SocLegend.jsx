@@ -36,6 +36,8 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
   const [showTooltip, setShowTooltip] = useState(false);
   // State to assign visibility of opacity slider section
   const [isOpen, setOpen] = useState(false);
+  // State to control selected visualisation
+  const [selectedVis, setSelectedVis] = useState("soc 23");
 
   // Function to open and close the opacity slider section
   function handleOpacitySection() {
@@ -53,11 +55,14 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
   const handleSocChange = (event) => {
     const selectedValue = event.target.value;
     setSocVis(selectedValue);
+    setSelectedVis(selectedValue);
   };
+  console.log(selectedVis);
   return (
     <>
+      {/* Legend header */}
       <Flex alignItems="center" w={"100%"}>
-        <Text fontSize={16}>Soil Organic Carbon</Text>
+        <Text fontSize={15}>Soil Organic Carbon</Text>
         <Spacer />
         <Image
           src={opacityIcon}
@@ -65,13 +70,14 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
           onClick={handleOpacitySection}
           alt="Opacity"
         />
+        {/* Opacity section */}
         <Box
           w={isOpen ? "40%" : "0%"}
           visibility={isOpen ? "visible" : "hidden"}
           transition={"ease 0.2s"}
           overflow={"hidden"}
           m={1}
-          p={1}
+          // p={1}
         >
           <Flex alignItems={"center"}>
             <Slider
@@ -104,18 +110,92 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
             </Slider>
           </Flex>
         </Box>
+        {/* Info section */}
         <InfoOutlineIcon />
       </Flex>
       <Divider />
-      <Flex>
-        <Text fontWeight={300}>Visualize:</Text>
+      {/* Visualization options */}
+      <Flex alignItems={"center"}>
+        <Text fontWeight={300} m={1}>Visualize:</Text>
         <Spacer />
-        <Select size={"xs"} w={"50%"} onChange={handleSocChange}>
-          <option value="soc 23">SOC 2023</option>
-          <option value="soc 22">SOC 2022</option>
-          <option value="soc change">SOC Change (2022-23)</option>
+        <Select
+          size={"xs"}
+          w={"70%"}
+          onChange={handleSocChange}
+          borderRadius={5}
+          fontWeight={500}
+        >
+          <option value="soc 23">SOC amount in 2023</option>
+          <option value="soc 22">SOC amount in 2022</option>
+          <option value="soc change">SOC Change from 2022 to 2023</option>
         </Select>
       </Flex>
+      {/* Legends section */}
+      <Box p={1}>
+        <Text fontSize={10} fontWeight={450} mt={2}>
+          SOC amount (ton/ha):
+        </Text>
+        {/* SOC 22 and SOC 2023 gradient */}
+        <Box
+          w="100%"
+          p={2}
+          display={selectedVis != "soc change" ? "block" : "none"}
+        >
+          <Box
+            h={"1vh"}
+            borderRadius={5}
+            bg="linear-gradient(to right, #f04438, #fec84b, #17b26a)"
+            mb={2}
+          />
+          <Flex justify="space-between">
+            <Text fontSize={10} fontWeight={450}>
+              9
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              10.25
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              11.5
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              13.25
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              15
+            </Text>
+          </Flex>
+        </Box>
+        {/* SOC change gradient */}
+        <Box
+          w="100%"
+          p={4}
+          display={selectedVis == "soc change" ? "block" : "none"}
+        >
+          <Box
+            h={"1vh"}
+            borderRadius={5}
+            bg="linear-gradient(to right, #DF4A4A, #F1F0DE, #3F8B85)"
+            mb={2}
+          />
+          <Flex justify="space-between">
+            <Text fontSize={10} fontWeight={450}>
+              -1
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              -0.5
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              0
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              0.75
+            </Text>
+            <Text fontSize={10} fontWeight={450}>
+              1.5
+            </Text>
+          </Flex>
+        </Box>
+      </Box>
     </>
   );
 }
