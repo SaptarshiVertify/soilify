@@ -116,7 +116,7 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
       <Divider />
       {/* Visualization options */}
       <Flex alignItems={"center"}>
-        <Text fontWeight={300} m={1}>Visualize:</Text>
+        <Text fontWeight={300}>Visualize:</Text>
         <Spacer />
         <Select
           size={"xs"}
@@ -168,7 +168,7 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
         {/* SOC change gradient */}
         <Box
           w="100%"
-          p={4}
+          p={2}
           display={selectedVis == "soc change" ? "block" : "none"}
         >
           <Box
