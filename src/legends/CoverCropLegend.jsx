@@ -23,13 +23,14 @@ import {
   Icon,
   Image,
   Divider,
+  Square,
 } from "@chakra-ui/react";
 
-import {InfoOutlineIcon} from "@chakra-ui/icons";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-function CoverCropLegend({ setLayerOpacity}) {
+function CoverCropLegend({ setLayerOpacity }) {
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -45,23 +46,28 @@ function CoverCropLegend({ setLayerOpacity}) {
     setSliderValue(v);
     setLayerOpacity((prevState) => ({
       ...prevState,
-      [key]: v/100,
-    }));;
+      [key]: v / 100,
+    }));
   }
   return (
-    <>
+    <Box
+    bg="white"
+    borderRadius={5}
+    p={1}
+    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+    mb={0.5}>
       <Flex alignItems="center" w={"100%"}>
         <Text fontSize={16}>Cover Crop</Text>
         <Spacer />
-          <Image
-            src={opacityIcon}
-            h={4}
-            onClick={handleOpacitySection}
-            alt="Opacity"
-          />
+        <Image
+          src={opacityIcon}
+          h={4}
+          onClick={handleOpacitySection}
+          alt="Opacity"
+        />
         <Box
           w={isOpen ? "40%" : "0%"}
-          visibility={isOpen?"visible":"hidden"}
+          visibility={isOpen ? "visible" : "hidden"}
           transition={"ease 0.2s"}
           overflow={"hidden"}
           m={1}
@@ -75,7 +81,7 @@ function CoverCropLegend({ setLayerOpacity}) {
               min={0}
               max={100}
               colorScheme="blue"
-              onChange={(v) => handleOpacityChange('cover crop',v)}
+              onChange={(v) => handleOpacityChange("cover crop", v)}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               size={"md"}
@@ -91,15 +97,18 @@ function CoverCropLegend({ setLayerOpacity}) {
                 isOpen={showTooltip}
                 label={`${sliderValue}%`}
               >
-                <SliderThumb bg={"whitesmoke"}/>
+                <SliderThumb bg={"whitesmoke"} />
               </Tooltip>
             </Slider>
           </Flex>
         </Box>
-        <InfoOutlineIcon/>
+        <InfoOutlineIcon />
       </Flex>
-      <Divider/>
-    </>
+      <Flex alignItems={"center"}>
+      <Square bg={"#fda29b"} size={4} m={1} ml={4} borderRadius={5}/>
+      <Text fontWeight={400}>Cover crop</Text>
+      </Flex>
+    </Box>
   );
 }
 

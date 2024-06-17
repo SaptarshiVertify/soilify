@@ -53,6 +53,16 @@ function MapComponent({
   // Function to let polygon drawing
   useEffect(() => {
     setDrawing("no");
+    // Collect the navigation and geocoder elements
+    const geocoderElement = document.querySelector(".mapboxgl-ctrl-geocoder");
+    const navElement = document.querySelector(".mapboxgl-ctrl-group");
+    // Set the visibility of the elements to visible
+    if (geocoderElement) {
+      geocoderElement.style.display = "block";
+    }
+    if (navElement) {
+      navElement.style.display = "block";
+    }
     if (isDisabled && map) {
       const draw = new MapboxDraw({
         displayControlsDefault: false,
@@ -78,6 +88,14 @@ function MapComponent({
       drawingMap.on("load", () => {
         draw.changeMode("draw_polygon");
         setDrawing("yes"); // Drawing enabled
+
+        // Set the visibility of the elements to none
+        if (geocoderElement) {
+          geocoderElement.style.display = "none";
+        }
+        if (navElement) {
+          navElement.style.display = "none";
+        }
       });
 
       drawingMap.on("draw.create", (event) => {
@@ -169,7 +187,7 @@ function MapComponent({
       ];
 
       const socLayers = ["soc 22", "soc 23", "soc change"];
-      const socId = "soil organic carbon map" // Storing the switch id for ease of use
+      const socId = "soil organic carbon map"; // Storing the switch id for ease of use
 
       // Change visibility and opacity for non SOC layers
       availLayers.forEach((id) => {
@@ -187,9 +205,13 @@ function MapComponent({
 
       // Change visibility and opacity for SOC layers
       socLayers.forEach((id) => {
-        map.setLayoutProperty(id,"visibility",switchState[socId] && socVis==id?"visible":"none")
-        map.setPaintProperty(id,"fill-opacity",layerOpacity[socId]);
-      })
+        map.setLayoutProperty(
+          id,
+          "visibility",
+          switchState[socId] && socVis == id ? "visible" : "none"
+        );
+        map.setPaintProperty(id, "fill-opacity", layerOpacity[socId]);
+      });
     }
   }, [map, switchState, layerOpacity, socVis]);
 

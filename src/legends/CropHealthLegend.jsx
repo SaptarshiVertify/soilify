@@ -32,7 +32,7 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-function CropTypeKharifLegend({ setLayerOpacity }) {
+function CropHealthLegend({ setLayerOpacity }) {
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -53,13 +53,14 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
   }
   return (
     <Box
-    bg="white"
-    borderRadius={5}
-    p={1}
-    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
-    mb={0.5}>
+      bg="white"
+      borderRadius={5}
+      p={1}
+      boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+      mb={0.5}
+    >
       <Flex alignItems="center" w={"100%"}>
-        <Text fontSize={16}>Crop type Kharif</Text>
+        <Text fontSize={16}>Crop Health</Text>
         <Spacer />
         <Image
           src={opacityIcon}
@@ -83,7 +84,7 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
               min={0}
               max={100}
               colorScheme="blue"
-              onChange={(v) => handleOpacityChange("crop type kharif", v)}
+              onChange={(v) => handleOpacityChange("crop health", v)}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               size={"md"}
@@ -108,20 +109,32 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
       </Flex>
       <Wrap alignItems={"center"}>
         <WrapItem>
-          <Square bg={"#fec84b"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Maize</Text>
+          <Square bg="#d92d20" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Poor Health
+          </Text>
         </WrapItem>
         <WrapItem>
-          <Square bg={"#079455"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Paddy</Text>
+          <Square bg="#acdc79" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Medium Health
+          </Text>
         </WrapItem>
         <WrapItem>
-          <Square bg={"#9e77ed"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Cotton</Text>
+          <Square bg="#085d3a" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Good Health
+          </Text>
+        </WrapItem>
+        <WrapItem>
+          <Square bg="#fedf89" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            No crop/bareland
+          </Text>
         </WrapItem>
       </Wrap>
     </Box>
   );
 }
 
-export default CropTypeKharifLegend;
+export default CropHealthLegend;

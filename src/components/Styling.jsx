@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { Box, Flex, Spacer, Text, Button, Divider } from "@chakra-ui/react";
 import CropTypeKharifLegend from "../legends/CropTypeKharifLegend";
+import CropTypeRabiLegend from "../legends/CropTypeRabiLegend";
 import CoverCropLegend from "../legends/CoverCropLegend";
+import CropHealthLegend from "../legends/CropHealthLegend";
+import FloodMapLegend from "../legends/FloodMapLegend";
+import FloodRiskLegend from "../legends/FloodRiskLegend";
 import SocLegend from "../legends/SocLegend";
+import LulcLegend from "../legends/LulcLegend";
+import ETLegend from "../legends/ETLegendcopy";
+
 import { GoChevronUp, GoChevronDown } from "react-icons/go";
 
 function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
@@ -21,11 +28,11 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
       <Flex
         bg={"white"}
         alignItems={"center"}
-        p={1}
+        // p={1}
         borderBottomColor={"black"}
         borderBottomWidth={minimized ? 0 : 1}
         borderStyle={"dotted"}
-        borderRadius={minimized ?"inherit":"none"}
+        borderRadius={minimized ? "inherit" : "none"}
         w={minimized ? "30%" : "100%"}
         ml={minimized ? "auto" : "0"}
         display={totalTrue > 0 && drawing == "no" ? "flex" : "none"}
@@ -39,9 +46,9 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
           size={"xs"}
           display={totalTrue > 0 && drawing == "no" ? "block" : "none"}
           bg={"transparent"}
-          _hover={{bg:"transparent"}}
+          _hover={{ bg: "transparent" }}
         >
-          {minimized?<GoChevronUp />:<GoChevronDown />}
+          {minimized ? <GoChevronUp /> : <GoChevronDown />}
         </Button>
       </Flex>
       <Box
@@ -49,19 +56,36 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
           totalTrue > 0 && drawing == "no" && !minimized ? "block" : "none"
         }
         bg={"white"}
-        p={2}
+        p={1}
         color={"black"}
         w={"100%"}
-        maxH={"100vh"}
       >
+        {switchState["soil organic carbon map"] ? (
+          <SocLegend setLayerOpacity={setLayerOpacity} setSocVis={setSocVis} />
+        ) : null}
         {switchState["crop type kharif"] ? (
           <CropTypeKharifLegend setLayerOpacity={setLayerOpacity} />
+        ) : null}
+        {switchState["crop type rabi"] ? (
+          <CropTypeRabiLegend setLayerOpacity={setLayerOpacity} />
         ) : null}
         {switchState["cover crop"] ? (
           <CoverCropLegend setLayerOpacity={setLayerOpacity} />
         ) : null}
-        {switchState["soil organic carbon map"] ? (
-          <SocLegend setLayerOpacity={setLayerOpacity} setSocVis={setSocVis} />
+        {switchState["crop health"] ? (
+          <CropHealthLegend setLayerOpacity={setLayerOpacity} />
+        ) : null}
+        {switchState["flood map"] ? (
+          <FloodMapLegend setLayerOpacity={setLayerOpacity} />
+        ) : null}
+        {switchState["flood risk"] ? (
+          <FloodRiskLegend setLayerOpacity={setLayerOpacity} />
+        ) : null}
+        {switchState["lulc"] ? (
+          <LulcLegend setLayerOpacity={setLayerOpacity} />
+        ) : null}
+        {switchState["evapotranspiration"] ? (
+          <ETLegend setLayerOpacity={setLayerOpacity} setSocVis={setSocVis} />
         ) : null}
       </Box>
     </>

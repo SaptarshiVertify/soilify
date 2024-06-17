@@ -32,7 +32,7 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-function CropTypeKharifLegend({ setLayerOpacity }) {
+function LulcLegend({ setLayerOpacity }) {
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -53,13 +53,14 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
   }
   return (
     <Box
-    bg="white"
-    borderRadius={5}
-    p={1}
-    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
-    mb={0.5}>
+      bg="white"
+      borderRadius={5}
+      p={1}
+      boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+      mb={0.5}
+    >
       <Flex alignItems="center" w={"100%"}>
-        <Text fontSize={16}>Crop type Kharif</Text>
+        <Text fontSize={16}>Land Use/Land Cover</Text>
         <Spacer />
         <Image
           src={opacityIcon}
@@ -83,7 +84,7 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
               min={0}
               max={100}
               colorScheme="blue"
-              onChange={(v) => handleOpacityChange("crop type kharif", v)}
+              onChange={(v) => handleOpacityChange("lulc", v)}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               size={"md"}
@@ -108,20 +109,56 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
       </Flex>
       <Wrap alignItems={"center"}>
         <WrapItem>
-          <Square bg={"#fec84b"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Maize</Text>
+          <Square bg="#d92d20" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Built-up
+          </Text>
         </WrapItem>
         <WrapItem>
-          <Square bg={"#079455"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Paddy</Text>
+          <Square bg="#acdc79" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Bare/Sparse vegetation
+          </Text>
         </WrapItem>
         <WrapItem>
-          <Square bg={"#9e77ed"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Cotton</Text>
+          <Square bg="#75e0a7" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Cropland
+          </Text>
+        </WrapItem>
+        <WrapItem>
+          <Square bg="#fedf89" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Grassland
+          </Text>
+        </WrapItem>
+        <WrapItem>
+          <Square bg="#669f2a" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Shrubland
+          </Text>
+        </WrapItem>
+        <WrapItem>
+          <Square bg="#0b7f50" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Tree cover
+          </Text>
+        </WrapItem>
+        <WrapItem>
+          <Square bg="#7cd4fd" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Wetland
+          </Text>
+        </WrapItem>
+        <WrapItem>
+          <Square bg="#444ce7" size={4} m={1} ml={4} borderRadius={5} />
+          <Text fontWeight={400} ml={2}>
+            Permanent water bodies
+          </Text>
         </WrapItem>
       </Wrap>
     </Box>
   );
 }
 
-export default CropTypeKharifLegend;
+export default LulcLegend;

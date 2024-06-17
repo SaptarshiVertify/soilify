@@ -42,7 +42,8 @@ function Stacking({ switchState, setSwitchState, setBasemap }) {
   const sections = {
     "Crop layers": [ "crop type kharif", "crop type rabi", "cover crop", "crop health"],
     "Flood layers": ["flood map", "flood risk", "stream order"],
-    "SOC layers": ["soil organic carbon map"]
+    "SOC layers": ["soil organic carbon map"],
+    "Thematic layers" : ["evapotranspiration", "lulc"]
     // Add more sections and layers as needed
   };
 

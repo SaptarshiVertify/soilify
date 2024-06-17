@@ -59,7 +59,12 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
   };
   console.log(selectedVis);
   return (
-    <>
+    <Box
+    bg="white"
+    borderRadius={5}
+    p={1}
+    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+    mb={0.5}>
       {/* Legend header */}
       <Flex alignItems="center" w={"100%"}>
         <Text fontSize={15}>Soil Organic Carbon</Text>
@@ -113,7 +118,6 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
         {/* Info section */}
         <InfoOutlineIcon />
       </Flex>
-      <Divider />
       {/* Visualization options */}
       <Flex alignItems={"center"} m={1}>
         <Text fontWeight={300}>Visualize:</Text>
@@ -196,7 +200,7 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
           </Flex>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 

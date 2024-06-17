@@ -24,15 +24,13 @@ import {
   Image,
   Divider,
   Square,
-  Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-function CropTypeKharifLegend({ setLayerOpacity }) {
+function FloodMapLegend({ setLayerOpacity }) {
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -59,7 +57,7 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
     boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
     mb={0.5}>
       <Flex alignItems="center" w={"100%"}>
-        <Text fontSize={16}>Crop type Kharif</Text>
+        <Text fontSize={16}>Flood Map</Text>
         <Spacer />
         <Image
           src={opacityIcon}
@@ -83,7 +81,7 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
               min={0}
               max={100}
               colorScheme="blue"
-              onChange={(v) => handleOpacityChange("crop type kharif", v)}
+              onChange={(v) => handleOpacityChange("flood map", v)}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               size={"md"}
@@ -106,22 +104,12 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
         </Box>
         <InfoOutlineIcon />
       </Flex>
-      <Wrap alignItems={"center"}>
-        <WrapItem>
-          <Square bg={"#fec84b"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Maize</Text>
-        </WrapItem>
-        <WrapItem>
-          <Square bg={"#079455"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Paddy</Text>
-        </WrapItem>
-        <WrapItem>
-          <Square bg={"#9e77ed"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Cotton</Text>
-        </WrapItem>
-      </Wrap>
+      <Flex alignItems={"center"}>
+      <Square bg={"#022366"} size={4} m={1} ml={4} borderRadius={5}/>
+      <Text fontWeight={400}>Flood Map</Text>
+      </Flex>
     </Box>
   );
 }
 
-export default CropTypeKharifLegend;
+export default FloodMapLegend;

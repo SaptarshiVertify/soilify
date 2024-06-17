@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -24,15 +24,15 @@ import {
   Image,
   Divider,
   Square,
-  Wrap,
-  WrapItem,
+  Center,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-function CropTypeKharifLegend({ setLayerOpacity }) {
+function ETLegend({ setLayerOpacity }) {
+  const numbers = Array.from({ length: 10 }, (_, i) => i);
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -53,13 +53,14 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
   }
   return (
     <Box
-    bg="white"
-    borderRadius={5}
-    p={1}
-    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
-    mb={0.5}>
+      bg="white"
+      borderRadius={5}
+      p={1}
+      boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+      mb={0.5}
+    >
       <Flex alignItems="center" w={"100%"}>
-        <Text fontSize={16}>Crop type Kharif</Text>
+        <Text fontSize={16}>Evapotranspiration</Text>
         <Spacer />
         <Image
           src={opacityIcon}
@@ -83,7 +84,7 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
               min={0}
               max={100}
               colorScheme="blue"
-              onChange={(v) => handleOpacityChange("crop type kharif", v)}
+              onChange={(v) => handleOpacityChange("evapotranspiration", v)}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               size={"md"}
@@ -106,22 +107,47 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
         </Box>
         <InfoOutlineIcon />
       </Flex>
-      <Wrap alignItems={"center"}>
-        <WrapItem>
-          <Square bg={"#fec84b"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Maize</Text>
-        </WrapItem>
-        <WrapItem>
-          <Square bg={"#079455"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Paddy</Text>
-        </WrapItem>
-        <WrapItem>
-          <Square bg={"#9e77ed"} size={4} m={1} ml={4} borderRadius={5} />
-          <Text fontWeight={400}>Cotton</Text>
-        </WrapItem>
-      </Wrap>
+      <Text fontWeight={400} fontSize={10} ml={4} mb={1}>Evapotranspiration in mm/day:</Text>
+      <Flex alignItems={"center"}>
+        <Spacer />
+        <Box
+          bg="#e0eaff"
+          w={8}
+          h={3}
+          borderTopLeftRadius="md"
+          borderBottomLeftRadius="md"
+        />
+        <Box bg="#c7d7fe" w={8} h={3} />
+        <Box bg="#a4bcfd" w={8} h={3} />
+        <Box bg="#8098f9" w={8} h={3} />
+        <Box bg="#6172f3" w={8} h={3} />
+        <Box bg="#444ce7" w={8} h={3} />
+        <Box bg="#3538cd" w={8} h={3} />
+        <Box bg="#2d31a6" w={8} h={3} />
+        <Box bg="#2d2382" w={8} h={3} />
+        <Box
+          bg="#1f235b"
+          w={8}
+          h={3}
+          borderTopRightRadius="md"
+          borderBottomRightRadius="md"
+        />
+        <Spacer />
+      </Flex>
+      <Flex alignItems={"center"}>
+        <Spacer />
+        {numbers.map((number, index) => (
+          <Fragment key={number}>
+            <Text fontWeight={400} fontSize={10}>
+              {number}
+            </Text>
+            {index < numbers.length - 1 && <Spacer />}
+          </Fragment>
+        ))}
+        <Spacer />
+      </Flex>
     </Box>
   );
 }
 
-export default CropTypeKharifLegend;
+export default ETLegend;
