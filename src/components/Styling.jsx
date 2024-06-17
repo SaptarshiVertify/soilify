@@ -49,7 +49,7 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
           totalTrue > 0 && drawing == "no" && !minimized ? "block" : "none"
         }
         bg={"white"}
-        // p={2}
+        p={2}
         color={"black"}
         w={"100%"}
         maxH={"100vh"}

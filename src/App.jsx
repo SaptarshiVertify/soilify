@@ -170,9 +170,9 @@ function App() {
                 {/* Analysis display button */}
                 <VStack spacing={0}>
                   <Box
-                    // onClick={() =>
-                    //   !isDisabled && handleComponentClick("Analysis")
-                    // }
+                    onClick={() =>
+                      !isDisabled && handleComponentClick("Analysis")
+                    }
                     style={{
                       pointerEvents: isDisabled ? "none" : "auto",
                       opacity: isDisabled ? 0.5 : 1,
