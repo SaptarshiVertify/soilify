@@ -24,6 +24,7 @@ import satellite from "../assets/satelitte.jpg";
 import hillshade_image from "../assets/hillshade_image.png";
 
 function Stacking({ switchState, setSwitchState, setBasemap }) {
+  console.log(switchState);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function handleBasemapChange(str) {

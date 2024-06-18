@@ -13,6 +13,7 @@ import ETLegend from "../legends/ETLegendcopy";
 import { GoChevronUp, GoChevronDown } from "react-icons/go";
 
 function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
+  console.log(drawing);
   // State to control minimize
   const [minimized, setMinimized] = useState(false);
   const totalTrue = Object.values(switchState).filter(Boolean).length;
@@ -20,7 +21,7 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
   // Function to control minimization
   function handleMinimize() {
     setMinimized((prev) => !prev);
-    console.log(minimized);
+    // console.log(minimized);
   }
 
   return (
@@ -35,7 +36,7 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
         borderRadius={minimized ? "inherit" : "none"}
         w={minimized ? "30%" : "100%"}
         ml={minimized ? "auto" : "0"}
-        display={totalTrue > 0 && drawing == "no" ? "flex" : "none"}
+        display={totalTrue > 0 && (drawing == "no"||drawing == "ready to analyse") ? "flex" : "none"}
       >
         <Text fontSize={16} fontWeight={700}>
           Legends
@@ -44,7 +45,7 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
         <Button
           onClick={handleMinimize}
           size={"xs"}
-          display={totalTrue > 0 && drawing == "no" ? "block" : "none"}
+          display={totalTrue > 0 && (drawing == "no"||drawing == "ready to analyse") ? "block" : "none"}
           bg={"transparent"}
           _hover={{ bg: "transparent" }}
         >
@@ -53,7 +54,7 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
       </Flex>
       <Box
         display={
-          totalTrue > 0 && drawing == "no" && !minimized ? "block" : "none"
+          totalTrue > 0 && (drawing == "no"||drawing == "ready to analyse") && !minimized ? "block" : "none"
         }
         bg={"white"}
         p={1}

@@ -57,7 +57,6 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
     setSocVis(selectedValue);
     setSelectedVis(selectedValue);
   };
-  console.log(selectedVis);
   return (
     <Box
     bg="white"

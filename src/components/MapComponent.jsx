@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import * as turf from "@turf/turf";
 import { Button, Box, Spinner } from "@chakra-ui/react";
 
 mapboxgl.accessToken =
@@ -16,6 +17,7 @@ function MapComponent({
   layerOpacity,
   basemap,
   socVis,
+  setGraph,
 }) {
   // State to control drawn polygon
   const [drawnPolygon, setDrawnPolygon] = useState(null);
@@ -72,6 +74,8 @@ function MapComponent({
       if (map.getLayer("drawn-polygon")) {
         map.removeLayer("drawn-polygon");
         map.removeSource("drawn-polygon");
+        map.removeLayer("drawn-polygon-border");
+        map.removeSource("drawn-polygon-border");
       }
 
       const drawingMap = new mapboxgl.Map({
@@ -129,9 +133,32 @@ function MapComponent({
           data: drawnPolygon,
         },
         paint: {
-          "fill-color": "#00FF00",
+          "fill-color": "#000000",
           "fill-opacity": 0.5,
         },
+      });
+
+      // Add the line layer for the dashed border
+      map.addLayer({
+        id: "drawn-polygon-border",
+        type: "line",
+        source: {
+          type: "geojson",
+          data: drawnPolygon,
+        },
+        paint: {
+          "line-color": "#CC7722", // Yellow ochre color
+          "line-width": 3,
+          "line-dasharray": [2, 2], // Dash pattern: 2px dash, 2px gap
+        },
+      });
+
+      // Collect the soc feature intersected
+      const socFeatures = map.queryRenderedFeatures({ layers: [socVis] });
+      // Pass the drawn polygon and the intersected regions to setGraph
+      setGraph({
+        drawnPolygon: drawnPolygon,
+        socFeatures: socFeatures,
       });
 
       // Clear the drawn polygon from state
@@ -146,6 +173,8 @@ function MapComponent({
       if (map.getLayer("drawn-polygon")) {
         map.removeLayer("drawn-polygon");
         map.removeSource("drawn-polygon");
+        map.removeLayer("drawn-polygon-border");
+        map.removeSource("drawn-polygon-border");
       }
     }
   }, [selectedComponent, drawing, map]);

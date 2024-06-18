@@ -5,10 +5,13 @@ import Analysis from "./components/Analysis";
 import MapComponent from "./components/MapComponent";
 import Styling from "./components/Styling";
 
-import logo from "./assets/Logo.png";
+import vertifyLogo from "./assets/Logo.png";
+import soilifyLogo from "./assets/Soilify-Logo.png";
 
 import { FiBarChart2 } from "react-icons/fi";
 import { PiStackLight } from "react-icons/pi";
+import { FaGithub } from "react-icons/fa";
+
 import {
   Grid,
   GridItem,
@@ -25,11 +28,12 @@ import {
   Icon,
   Image,
   Spinner,
+  Link,
 } from "@chakra-ui/react";
 import { color } from "framer-motion";
+import { HiRefresh } from "react-icons/hi";
 
 function App() {
-
   // State to control Stacking/Analysis tab
   const [selectedComponent, setSelectedComponent] = useState("Stacking");
 
@@ -50,16 +54,14 @@ function App() {
     "cover crop": false,
     "crop health": false,
     // SOC layers
-    "soc change": false,
-    "soc 22": false,
-    "soc 23": false,
+    "soil organic carbon map": true,
     // Flood layers
     "flood risk": false,
     "flood map": false,
     "stream order": false,
     // Miscellaneous
-    "lulc": false,
-    "evapotranspiration":false
+    lulc: false,
+    evapotranspiration: false,
   });
 
   // State to control opacities of layers
@@ -78,15 +80,18 @@ function App() {
     "flood map": 0.75,
     "stream order": 0.75,
     // Miscellaneous
-    "lulc": 0.75,
-    "evapotranspiration":0.75
+    lulc: 0.75,
+    evapotranspiration: 0.75,
   });
 
   // State to control SOC visualization
-  const [socVis,setSocVis] = useState("soc 23");
+  const [socVis, setSocVis] = useState("soc 23");
 
   // State to control drawing
   const [drawing, setDrawing] = useState("no");
+
+  // State to control drawn polygon and rendered soc map for graph component
+  const [graph, setGraph] = useState(null);
 
   // Function to change and open/close Stacking/Analysis tab
   const handleComponentClick = (component) => {
@@ -106,6 +111,9 @@ function App() {
   // Function to toggle disability
   const toggleDisability = () => {
     setIsDisabled((prev) => !prev);
+    if (drawing == "ready to analyse") {
+      setDrawing("no");
+    }
   };
 
   return (
@@ -131,7 +139,12 @@ function App() {
               closeOnBlur={false}
             >
               <PopoverTrigger>
-                <Image src={logo} alt="Vertify" />
+                {/* Website logo */}
+                <Box w="90%">
+                  <Link href="https://soilify.earth/" isExternal>
+                    <Image src={soilifyLogo} alt="Vertify" />
+                  </Link>
+                </Box>
               </PopoverTrigger>
               <VStack spacing={2}>
                 {/* Stacking display button */}
@@ -207,9 +220,8 @@ function App() {
                 >
                   {/* Tabs */}
                   <PopoverBody h={"100vh"}>
-                    
                     {selectedComponent === "Stacking" ? (
-                      // Stacking tab 
+                      // Stacking tab
                       <Stacking
                         switchState={switchState}
                         setSwitchState={setSwitchState}
@@ -222,6 +234,8 @@ function App() {
                         isDisabled={isDisabled}
                         drawing={drawing}
                         setDrawing={setDrawing}
+                        switchState={switchState}
+                        graph={graph}
                       />
                     )}
                   </PopoverBody>
@@ -232,12 +246,19 @@ function App() {
             {/* Extras and links*/}
             <Spacer />
             <VStack>
-              <Box w="20%" bg="blue" p={4}></Box>{" "}
-              {/* Github link will be here */}
-              <Box w="20%" bg="blue" p={4}></Box>{" "}
-              {/* EAI website link will be here */}
-              <Box w="20%" bg="blue" p={4}></Box>{" "}
-              {/* Soilify i.e project website link will be here */}
+              <Box w="90%">
+                <Link href="https://vertify.earth/" isExternal>
+                  <Image src={vertifyLogo} alt="Vertify" />
+                </Link>
+              </Box>
+              <Box w="90%">
+                <Link
+                  href="https://github.com/vertify-earth/Soilify"
+                  isExternal
+                >
+                  <FaGithub size={"md"}/>
+                </Link>
+              </Box>
             </VStack>
           </VStack>
         </GridItem>
@@ -246,7 +267,7 @@ function App() {
         <GridItem bg="green.300" area={"main"}>
           {/* Styling tab */}
           <Box
-            bottom={2}
+            bottom={6}
             right={2}
             position={"absolute"}
             zIndex={1}
@@ -273,6 +294,7 @@ function App() {
             layerOpacity={layerOpacity}
             basemap={basemap}
             socVis={socVis}
+            setGraph={setGraph}
           />
         </GridItem>
       </Grid>
