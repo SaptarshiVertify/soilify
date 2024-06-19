@@ -152,7 +152,7 @@ function Stacking({
           </Popover>
         </Flex>
         {/* Layers start */}
-        <Heading size={"md"} left={0}>
+        <Heading size={"md"} left={0} m={1}>
           Layers:
         </Heading>
         {/* Accordions */}

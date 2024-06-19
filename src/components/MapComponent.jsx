@@ -35,6 +35,7 @@ function MapComponent({
       zoom: 12, // Initial map zoom level
       pitchWithRotate: false, // Disable pitch with rotate
       touchPitch: false, // Disable pitch with touch
+      maxBounds: [77.79,17.68,78.59,18.22]
     });
     mapInstance.on("load", () => {
       // Add search control

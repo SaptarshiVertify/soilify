@@ -1,14 +1,5 @@
 import { useState } from "react";
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Flex,
   Spacer,
@@ -26,6 +17,14 @@ import {
   Square,
   Wrap,
   WrapItem,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
@@ -33,15 +32,16 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 import opacityIcon from "../assets/contrast-01.png";
 
 function LulcLegend({ setLayerOpacity }) {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
   // State to assign visibility of opacity slider section
-  const [isOpen, setOpen] = useState(false);
+  const [isOpacityOpen, setOpacityOpen] = useState(false);
 
-  // Function to open and close the opacity slider section
+  // Function to OpacityOpen and close the opacity slider section
   function handleOpacitySection() {
-    setOpen((prev) => !prev);
+    setOpacityOpen((prev) => !prev);
   }
   // Function to handle opacity change
   function handleOpacityChange(key, v) {
@@ -59,6 +59,7 @@ function LulcLegend({ setLayerOpacity }) {
       boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
       mb={0.5}
     >
+      {/* Header Section */}
       <Flex alignItems="center" w={"100%"}>
         <Text fontSize={16}>Land Use/Land Cover</Text>
         <Spacer />
@@ -69,14 +70,15 @@ function LulcLegend({ setLayerOpacity }) {
           alt="Opacity"
         />
         <Box
-          w={isOpen ? "40%" : "0%"}
-          visibility={isOpen ? "visible" : "hidden"}
+          w={isOpacityOpen ? "40%" : "0%"}
+          visibility={isOpacityOpen ? "visible" : "hidden"}
           transition={"ease 0.2s"}
           overflow={"hidden"}
           m={1}
           p={1}
         >
           <Flex alignItems={"center"}>
+            {/* Opacity Slider */}
             <Slider
               m={2}
               id="slider"
@@ -105,7 +107,8 @@ function LulcLegend({ setLayerOpacity }) {
             </Slider>
           </Flex>
         </Box>
-        <InfoOutlineIcon />
+        {/* Modal Button */}
+        <InfoOutlineIcon onClick={onOpen}/>
       </Flex>
       <Wrap alignItems={"center"}>
         <WrapItem>
@@ -157,6 +160,24 @@ function LulcLegend({ setLayerOpacity }) {
           </Text>
         </WrapItem>
       </Wrap>
+      {/* Modal contenet */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <h1>Hello</h1>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
