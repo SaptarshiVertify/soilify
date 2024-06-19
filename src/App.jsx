@@ -55,10 +55,6 @@ function App() {
     "crop health": false,
     // SOC layers
     "soil organic carbon map": true,
-    // Flood layers
-    "flood risk": false,
-    "flood map": false,
-    "stream order": false,
     // Miscellaneous
     lulc: false,
     evapotranspiration: false,
@@ -75,10 +71,6 @@ function App() {
     "soc change": 0.75,
     "soc 22": 0.75,
     "soc 23": 0.75,
-    // Flood layers
-    "flood risk": 0.75,
-    "flood map": 0.75,
-    "stream order": 0.75,
     // Miscellaneous
     lulc: 0.75,
     evapotranspiration: 0.75,
@@ -256,7 +248,7 @@ function App() {
                   href="https://github.com/vertify-earth/Soilify"
                   isExternal
                 >
-                  <FaGithub size={"md"}/>
+                  <FaGithub size={"90%"}/>
                 </Link>
               </Box>
             </VStack>

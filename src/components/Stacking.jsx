@@ -41,17 +41,22 @@ function Stacking({ switchState, setSwitchState, setBasemap }) {
   };
 
   const sections = {
-    "Crop layers": [ "crop type kharif", "crop type rabi", "cover crop", "crop health"],
-    "Flood layers": ["flood map", "flood risk", "stream order"],
     "SOC layers": ["soil organic carbon map"],
-    "Thematic layers" : ["evapotranspiration", "lulc"]
+    "Crop layers": [
+      "crop type kharif",
+      "crop type rabi",
+      "cover crop",
+      "crop health",
+    ],
+
+    "Thematic layers": ["evapotranspiration", "lulc"],
     // Add more sections and layers as needed
   };
 
   const toSentenceCase = (str) => {
     return str
       .toLowerCase()
-      .replace(/(^\w|\s\w)/g, match => match.toUpperCase());
+      .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
   };
 
   return (

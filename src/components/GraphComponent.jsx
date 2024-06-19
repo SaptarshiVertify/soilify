@@ -90,6 +90,10 @@ const GraphComponent = ({ graph }) => {
     return null;
   };
 
+  // Temporarily suppress warnings
+  const originalWarn = console.warn;
+  console.warn = () => {};
+
   return (
     <>
       {loading ? (

@@ -4,8 +4,6 @@ import CropTypeKharifLegend from "../legends/CropTypeKharifLegend";
 import CropTypeRabiLegend from "../legends/CropTypeRabiLegend";
 import CoverCropLegend from "../legends/CoverCropLegend";
 import CropHealthLegend from "../legends/CropHealthLegend";
-import FloodMapLegend from "../legends/FloodMapLegend";
-import FloodRiskLegend from "../legends/FloodRiskLegend";
 import SocLegend from "../legends/SocLegend";
 import LulcLegend from "../legends/LulcLegend";
 import ETLegend from "../legends/ETLegendcopy";
