@@ -18,8 +18,9 @@ function MapComponent({
   basemap,
   socVis,
   setGraph,
-  setCursorCoordinates,
 }) {
+  // State to control cursor coordinates
+  const [cursorCoordinates, setCursorCoordinates] = useState({ lng: 0, lat: 0 });
   // State to control drawn polygon
   const [drawnPolygon, setDrawnPolygon] = useState(null);
   // State to control map

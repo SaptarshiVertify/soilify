@@ -46,9 +46,6 @@ function App() {
   // State to control if Stacking/Analysis tab is open
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // State to control cursor coordinates
-  const [cursorCoordinates, setCursorCoordinates] = useState({ lng: 0, lat: 0 });
-
   // State to control switch states
   const [switchState, setSwitchState] = useState({
     // Crop layers
@@ -221,7 +218,6 @@ function App() {
                         switchState={switchState}
                         setSwitchState={setSwitchState}
                         setBasemap={setBasemap}
-                        cursorCoordinates={cursorCoordinates}
                       />
                     ) : (
                       // Analysis tab
@@ -232,7 +228,6 @@ function App() {
                         setDrawing={setDrawing}
                         switchState={switchState}
                         graph={graph}
-                        cursorCoordinates={cursorCoordinates}
                       />
                     )}
                   </PopoverBody>
@@ -292,7 +287,6 @@ function App() {
             basemap={basemap}
             socVis={socVis}
             setGraph={setGraph}
-            setCursorCoordinates={setCursorCoordinates}
           />
         </GridItem>
       </Grid>
