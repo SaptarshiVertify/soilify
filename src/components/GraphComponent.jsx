@@ -116,7 +116,7 @@ const GraphComponent = ({ graph }) => {
           />
           <YAxis tick={{ fontSize: 10, fontFamily: "Arial" }}/>
           <Tooltip content={<CustomTooltip />} />
-          <ReferenceLine y={0} stroke="#000" />{" "}
+          <ReferenceLine y={0} stroke="#000"/>
           {/* Line at y=0 for negative values */}
           <Bar dataKey="mean" barSize={30}>
             {chartData.map((entry, index) => (

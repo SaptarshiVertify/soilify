@@ -1,4 +1,13 @@
-import { Box, Button, Flex, Text, Image, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  Image,
+  Spacer,
+  VStack,
+  Divider
+} from "@chakra-ui/react";
 import { LiaVectorSquareSolid } from "react-icons/lia";
 import { BsFillFileBarGraphFill } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -91,31 +100,31 @@ function Analysis({
         </Text>
       )}
 
-      {/* Graph section */}
-
-      <Box display={drawing == "ready to analyse" ? "visible" : "none"}>
-        <Flex alignItems={"center"} m={1} p={1}>
-          <Spacer />
-          <Text fontSize={14} fontWeight={500}>
-            Remove Poygon
-          </Text>
-          <Box
-            ml={1}
-            onClick={handleGraph}
-            bg={"white"}
-            w={"fit-content"}
-            borderRadius={5}
-            p={0.5}
-            right={0}
-            _hover={{ color: "red" }}
-          >
-            <RiDeleteBin5Line />
+        {/* Graph section */}
+        <Box display={drawing == "ready to analyse" ? "visible" : "none"}>
+          <Flex alignItems={"center"} m={1} p={1}>
+            <Spacer />
+            <Text fontSize={14} fontWeight={500}>
+              Remove Poygon
+            </Text>
+            <Box
+              ml={1}
+              onClick={handleGraph}
+              bg={"white"}
+              w={"fit-content"}
+              borderRadius={5}
+              p={0.5}
+              right={0}
+              _hover={{ color: "red" }}
+            >
+              <RiDeleteBin5Line />
+            </Box>
+          </Flex>
+          <Box bg={"white"}>
+            <GraphComponent graph={graph}/>
           </Box>
-        </Flex>
-        <Box bg={"white"}>
-          <GraphComponent graph={graph} size={"sm"} />
         </Box>
-      </Box>
+        
     </>
   );
 }

@@ -5,7 +5,7 @@ import Analysis from "./components/Analysis";
 import MapComponent from "./components/MapComponent";
 import Styling from "./components/Styling";
 
-import vertifyLogo from "./assets/Logo.png";
+import vertifyLogo from "./assets/Vertify_Logo_RGB.png";
 import soilifyLogo from "./assets/Soilify-Logo.png";
 
 import { FiBarChart2 } from "react-icons/fi";
@@ -45,6 +45,9 @@ function App() {
 
   // State to control if Stacking/Analysis tab is open
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // State to control cursor coordinates
+  const [cursorCoordinates, setCursorCoordinates] = useState({ lng: 0, lat: 0 });
 
   // State to control switch states
   const [switchState, setSwitchState] = useState({
@@ -211,13 +214,14 @@ function App() {
                   bg={"#EAECF0"}
                 >
                   {/* Tabs */}
-                  <PopoverBody h={"100vh"}>
+                  <PopoverBody h={"100vh"} p={1}>
                     {selectedComponent === "Stacking" ? (
                       // Stacking tab
                       <Stacking
                         switchState={switchState}
                         setSwitchState={setSwitchState}
                         setBasemap={setBasemap}
+                        cursorCoordinates={cursorCoordinates}
                       />
                     ) : (
                       // Analysis tab
@@ -228,6 +232,7 @@ function App() {
                         setDrawing={setDrawing}
                         switchState={switchState}
                         graph={graph}
+                        cursorCoordinates={cursorCoordinates}
                       />
                     )}
                   </PopoverBody>
@@ -238,12 +243,12 @@ function App() {
             {/* Extras and links*/}
             <Spacer />
             <VStack>
-              <Box w="90%">
+              <Box w="90%" alignItems={"center"}>
                 <Link href="https://vertify.earth/" isExternal>
                   <Image src={vertifyLogo} alt="Vertify" />
                 </Link>
               </Box>
-              <Box w="90%">
+              <Box w="90%" alignItems={"center"}>
                 <Link
                   href="https://github.com/vertify-earth/Soilify"
                   isExternal
@@ -287,6 +292,7 @@ function App() {
             basemap={basemap}
             socVis={socVis}
             setGraph={setGraph}
+            setCursorCoordinates={setCursorCoordinates}
           />
         </GridItem>
       </Grid>

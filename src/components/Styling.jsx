@@ -11,7 +11,6 @@ import ETLegend from "../legends/ETLegendcopy";
 import { GoChevronUp, GoChevronDown } from "react-icons/go";
 
 function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
-  console.log(drawing);
   // State to control minimize
   const [minimized, setMinimized] = useState(false);
   const totalTrue = Object.values(switchState).filter(Boolean).length;
@@ -19,7 +18,6 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
   // Function to control minimization
   function handleMinimize() {
     setMinimized((prev) => !prev);
-    // console.log(minimized);
   }
 
   return (

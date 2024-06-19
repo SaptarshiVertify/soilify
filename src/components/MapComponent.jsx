@@ -18,11 +18,13 @@ function MapComponent({
   basemap,
   socVis,
   setGraph,
+  setCursorCoordinates,
 }) {
   // State to control drawn polygon
   const [drawnPolygon, setDrawnPolygon] = useState(null);
   // State to control map
   const [map, setMap] = useState(null);
+
   // Function to create map instance
   useEffect(() => {
     const mapInstance = new mapboxgl.Map({
@@ -47,6 +49,14 @@ function MapComponent({
       mapInstance.addControl(nav, "top-right");
       // Set the map instance to state
       setMap(mapInstance);
+
+      // Add mousemove event listener
+      mapInstance.on("mousemove", (e) => {
+        setCursorCoordinates({
+          lng: e.lngLat.lng,
+          lat: e.lngLat.lat,
+        });
+      });
     });
 
     return () => mapInstance.remove();
@@ -184,7 +194,6 @@ function MapComponent({
     if (map) {
       // Get the style object
       const style = map.getStyle();
-      console.log(style.layers);
       // List of all available basemaps
       const availBasemaps = ["satellite", "mapbox-terrain"];
       availBasemaps.forEach((id) => {

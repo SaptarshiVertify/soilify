@@ -23,8 +23,11 @@ import HoverImage from "./HoverImage";
 import satellite from "../assets/satelitte.jpg";
 import hillshade_image from "../assets/hillshade_image.png";
 
-function Stacking({ switchState, setSwitchState, setBasemap }) {
-  console.log(switchState);
+function Stacking({
+  switchState,
+  setSwitchState,
+  setBasemap,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function handleBasemapChange(str) {
@@ -78,106 +81,115 @@ function Stacking({ switchState, setSwitchState, setBasemap }) {
         </Text>
       </Box>
 
-      {/* Basemap */}
-      <Flex alignItems={"center"}>
-        <Popover
-          placement="right-start"
-          onClose={onClose}
-          isOpen={isOpen}
-          onOpen={onOpen}
-        >
-          <PopoverTrigger>
-            <Flex
-              role="button"
-              w={"fit-content"}
-              p={1}
-              bg="blue.500"
-              alignItems={"center"}
-              borderRadius={3}
-              onClick={isOpen ? onClose : onOpen}
-            >
-              <Text fontSize={"xs"} fontWeight={300} color={"white"}>
-                Basemap
-              </Text>
-            </Flex>
-          </PopoverTrigger>
-          <PopoverContent bg="whitesmoke" color="black.500" w={"100%"}>
-            <PopoverBody>
-              <VStack>
-                <Box
-                  as="button"
-                  onClick={() => handleBasemapChange("mapbox-terrain")}
-                >
-                  <HoverImage
-                    src={hillshade_image}
-                    alt="Hillshade"
-                    h={"15vh"}
-                    w={"20vh"}
-                  />
-                </Box>
-                <Text fontSize={8} fontWeight={500} alignSelf={"center"} p={0}>
-                  Hillshade
+        {/* Basemap */}
+        <Flex alignItems={"center"}>
+          <Popover
+            placement="right-start"
+            onClose={onClose}
+            isOpen={isOpen}
+            onOpen={onOpen}
+          >
+            <PopoverTrigger>
+              <Flex
+                role="button"
+                w={"fit-content"}
+                p={1}
+                bg="blue.500"
+                alignItems={"center"}
+                borderRadius={3}
+                onClick={isOpen ? onClose : onOpen}
+              >
+                <Text fontSize={"xs"} fontWeight={300} color={"white"}>
+                  Basemap
                 </Text>
-                <Divider />
-                <Box
-                  as="button"
-                  onClick={() => handleBasemapChange("satellite")}
-                >
-                  <HoverImage
-                    src={satellite}
-                    alt="Satellite Image"
-                    h={"15vh"}
-                    w={"20vh"}
-                  />
-                </Box>
-                <Text fontSize={8} fontWeight={500} alignSelf={"center"} p={0}>
-                  Satellite
+              </Flex>
+            </PopoverTrigger>
+            <PopoverContent bg="whitesmoke" color="black.500" w={"100%"}>
+              <PopoverBody>
+                <VStack>
+                  <Box
+                    as="button"
+                    onClick={() => handleBasemapChange("mapbox-terrain")}
+                  >
+                    <HoverImage
+                      src={hillshade_image}
+                      alt="Hillshade"
+                      h={"15vh"}
+                      w={"20vh"}
+                    />
+                  </Box>
+                  <Text
+                    fontSize={8}
+                    fontWeight={500}
+                    alignSelf={"center"}
+                    p={0}
+                  >
+                    Hillshade
+                  </Text>
+                  <Divider />
+                  <Box
+                    as="button"
+                    onClick={() => handleBasemapChange("satellite")}
+                  >
+                    <HoverImage
+                      src={satellite}
+                      alt="Satellite Image"
+                      h={"15vh"}
+                      w={"20vh"}
+                    />
+                  </Box>
+                  <Text
+                    fontSize={8}
+                    fontWeight={500}
+                    alignSelf={"center"}
+                    p={0}
+                  >
+                    Satellite
+                  </Text>
+                </VStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </Flex>
+        {/* Layers start */}
+        <Heading size={"md"} left={0}>
+          Layers:
+        </Heading>
+        {/* Accordions */}
+        <Accordion allowMultiple w={"100%"}>
+          {Object.entries(sections).map(([section, layers]) => (
+            <AccordionItem key={section} mb={2}>
+              <AccordionButton
+                bg={"white"}
+                borderBottom={"1px #98A2B3 solid"}
+                borderTopRadius={8}
+                _hover={{ bg: "white" }}
+                _expanded={{ borderBottom: 0 }}
+              >
+                <Text w={"100%"} align={"left"}>
+                  {section}
                 </Text>
-              </VStack>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-      </Flex>
-
-      {/* Layers start */}
-      <Heading size={"md"} m={3}>
-        Layers:
-      </Heading>
-
-      {/* Accordions */}
-      <Accordion allowMultiple>
-        {Object.entries(sections).map(([section, layers]) => (
-          <AccordionItem key={section} mb={2}>
-            <AccordionButton
-              bg={"white"}
-              borderBottom={"1px #98A2B3 solid"}
-              borderTopRadius={8}
-              _hover={{ bg: "white" }}
-              _expanded={{ borderBottom: 0 }}
-            >
-              <Text w={"100%"} align={"left"}>
-                {section}
-              </Text>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4} bg={"white"}>
-              {layers.map((layer) => (
-                <Flex key={layer} alignItems={"center"} mb={2}>
-                  <Text fontSize={"small"}>{toSentenceCase(layer)}</Text>
-                  <Spacer />
-                  <Switch
-                    id={layer}
-                    size={"sm"}
-                    isChecked={switchState[layer]}
-                    onChange={handleSwitchChange}
-                  />
-                </Flex>
-              ))}
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
-      {/* Layers end */}
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel pb={4} bg={"white"}>
+                {layers.map((layer) => (
+                  <Flex key={layer} alignItems={"center"} mb={2}>
+                    <Text fontSize={"small"}>{toSentenceCase(layer)}</Text>
+                    <Spacer />
+                    <Switch
+                      id={layer}
+                      size={"sm"}
+                      isChecked={switchState[layer]}
+                      onChange={handleSwitchChange}
+                    />
+                  </Flex>
+                ))}
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+        </Accordion>
+        
+        
     </>
   );
 }
