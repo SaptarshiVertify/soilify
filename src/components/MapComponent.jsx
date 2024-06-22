@@ -4,6 +4,8 @@ import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import * as turf from "@turf/turf";
 import { Button, Box, Spinner } from "@chakra-ui/react";
+import { createRoot } from "react-dom/client";
+import PopupContent from "./PopupContent";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZGV2MDUxMCIsImEiOiJjbGNoaG41czEwYmxuM3FtOWNvemVub3lkIn0.5hN1wrZNfw-7YmnNYKM2YQ"; // Replace with your Mapbox access token
@@ -20,11 +22,17 @@ function MapComponent({
   setGraph,
 }) {
   // State to control cursor coordinates
-  const [cursorCoordinates, setCursorCoordinates] = useState({ lng: 0, lat: 0 });
+  const [cursorCoordinates, setCursorCoordinates] = useState({
+    lng: 0,
+    lat: 0,
+  });
   // State to control drawn polygon
   const [drawnPolygon, setDrawnPolygon] = useState(null);
   // State to control map
   const [map, setMap] = useState(null);
+
+  // State to control popup
+  const [popup, setPopup] = useState(null);
 
   // Function to create map instance
   useEffect(() => {
@@ -35,7 +43,7 @@ function MapComponent({
       zoom: 12, // Initial map zoom level
       pitchWithRotate: false, // Disable pitch with rotate
       touchPitch: false, // Disable pitch with touch
-      maxBounds: [77.79,17.68,78.59,18.22]
+      maxBounds: [77.79, 17.68, 78.59, 18.22],
     });
     mapInstance.on("load", () => {
       // Add search control
@@ -254,6 +262,57 @@ function MapComponent({
       });
     }
   }, [map, switchState, layerOpacity, socVis]);
+
+  // Function for popup for SOC map
+  useEffect(() => {
+    if (map) {
+      const handleClick = (e) => {
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: [socVis],
+        });
+
+        const coords = turf.centroid(features[0].geometry).geometry.coordinates; // Co-ordinates for popup
+
+        // Create a container for the popup content
+        const popupNode = document.createElement("div");
+
+        // Create a root using createRoot
+        const root = createRoot(popupNode);
+
+        // Render the PopupContent component into the popupNode
+        root.render(<PopupContent feature={features[0]} />);
+
+        if (popup) {
+          popup.remove();
+        }
+
+        const newPopup = new mapboxgl.Popup()
+          .setLngLat(coords)
+          .setDOMContent(popupNode)
+          .addTo(map);
+
+        setPopup(newPopup);
+      };
+
+      map.on("click", socVis, handleClick);
+
+      // Cleanup function to remove the popup and the click event listener
+      return () => {
+        if (popup) {
+          popup.remove();
+        }
+        map.off("click", socVis, handleClick);
+      };
+    }
+  }, [map, socVis, switchState]);
+
+  // Effect to remove popup when the SOC map switch is turned off
+  useEffect(() => {
+    if (!switchState["soil organic carbon map"] && popup) {
+      popup.remove();
+      setPopup(null);
+    }
+  }, [switchState, popup]);
 
   return (
     <>
