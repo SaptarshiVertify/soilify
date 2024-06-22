@@ -308,11 +308,11 @@ function MapComponent({
 
   // Effect to remove popup when the SOC map switch is turned off
   useEffect(() => {
-    if (!switchState["soil organic carbon map"] && popup) {
+    if ((!switchState["soil organic carbon map"] && popup) || (drawing=="yes" && popup)) {
       popup.remove();
       setPopup(null);
     }
-  }, [switchState, popup]);
+  }, [switchState, popup,drawing]);
 
   return (
     <>
