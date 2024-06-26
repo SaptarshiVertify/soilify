@@ -61,8 +61,10 @@ The project repository is organized as follows:
 To use the Soilify web application, visit [Soilify Website](https://soilify.vercel.app/).
 
 ## Screenshots
-![Screenshot1](link-to-screenshot1)
-![Screenshot2](link-to-screenshot2)
+![Screenshot1](./Screenshots/Screenshot-2024-06-24-093144.png)
+Snapshot of website on layers visualisation.
+![Screenshot1](./Screenshots/Screenshot-2024-06-24-093628.png)
+Snapshot of website on zonal statistics analysis.
 
 ## Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
