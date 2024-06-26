@@ -81,4 +81,4 @@ SaptarshiVertify - [your-email@example.com](mailto:your-email@example.com)
 
 Project Link: [https://github.com/SaptarshiVertify/soilify](https://github.com/SaptarshiVertify/soilify)
 
-Webpage: [Soilify Website](https://soilify.vercel.app/)
+Webpage: [Soilify Website](https://soil-and-crop-monitor.vercel.app/)
