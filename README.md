@@ -77,8 +77,8 @@ Contributions are what make the open source community such an amazing place to l
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
-SaptarshiVertify - [your-email@example.com](mailto:your-email@example.com)
+SaptarshiVertify - [Email](mailto:saptarshi@earthanalytics.in)
 
-Project Link: [https://github.com/SaptarshiVertify/soilify](https://github.com/SaptarshiVertify/soilify)
+Project Link: [Vertify Soilify Github](https://github.com/vertify-earth/Soilify)
 
 Webpage: [Soilify Website](https://soil-and-crop-monitor.vercel.app/)
