@@ -1,14 +1,5 @@
 import { useState } from "react";
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Flex,
   Spacer,
@@ -26,22 +17,34 @@ import {
   Square,
   Wrap,
   WrapItem,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Link,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
+import ctKharifImage from "../assets/legendImages/ctkharif.png"
+
 function CropTypeKharifLegend({ setLayerOpacity }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
   // State to assign visibility of opacity slider section
-  const [isOpen, setOpen] = useState(false);
+  const [isOpacityOpen, setOpacityOpen] = useState(false);
 
   // Function to open and close the opacity slider section
   function handleOpacitySection() {
-    setOpen((prev) => !prev);
+    setOpacityOpen((prev) => !prev);
   }
   // Function to handle opacity change
   function handleOpacityChange(key, v) {
@@ -53,11 +56,12 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
   }
   return (
     <Box
-    bg="white"
-    borderRadius={5}
-    p={1}
-    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
-    mb={0.5}>
+      bg="white"
+      borderRadius={5}
+      p={1}
+      boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+      mb={0.5}
+    >
       <Flex alignItems="center" w={"100%"}>
         <Text fontSize={16}>Crop type Kharif</Text>
         <Spacer />
@@ -68,8 +72,8 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
           alt="Opacity"
         />
         <Box
-          w={isOpen ? "40%" : "0%"}
-          visibility={isOpen ? "visible" : "hidden"}
+          w={isOpacityOpen ? "40%" : "0%"}
+          visibility={isOpacityOpen ? "visible" : "hidden"}
           transition={"ease 0.2s"}
           overflow={"hidden"}
           m={1}
@@ -104,7 +108,8 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
             </Slider>
           </Flex>
         </Box>
-        <InfoOutlineIcon />
+        {/* Modal Button */}
+        <InfoOutlineIcon onClick={onOpen} />
       </Flex>
       <Wrap alignItems={"center"}>
         <WrapItem>
@@ -120,6 +125,49 @@ function CropTypeKharifLegend({ setLayerOpacity }) {
           <Text fontWeight={400}>Cotton</Text>
         </WrapItem>
       </Wrap>
+      {/* Modal contenet */}
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Crop type map (Kharif)</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody textAlign={"justify"}>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Description:
+              </Text>
+              <Text>
+                A crop type map shows the distribution of different crop species
+                across a landscape. Created from satellite imagery by analyzing
+                spectral signatures, it provides essential information for
+                agricultural planning and management. In India, crops are
+                primarily grown in two seasons: Kharif and Rabi. Kharif crops
+                are sown with the onset of the monsoon in June and harvested in
+                autumn, including crops like rice, maize, and millets. Rabi
+                crops are sown in winter, starting in October, and harvested in
+                spring, with wheat, barley, and peas being common examples.
+              </Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Source:
+              </Text>
+              <Text>Analysed using Sentinel-2 imagery.</Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Resolution:
+              </Text>
+              <Text>10 meter</Text>
+            </Flex>
+            <Flex alignContent={"center"}>
+              <Spacer />
+              <Image src={ctKharifImage} h={"30%"} w={"70%"} borderRadius={10}/>
+              <Spacer />
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

@@ -25,14 +25,16 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Link,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
+import lulcImage from "../assets/legendImages/lulc.png";
 
 function LulcLegend({ setLayerOpacity }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -108,7 +110,7 @@ function LulcLegend({ setLayerOpacity }) {
           </Flex>
         </Box>
         {/* Modal Button */}
-        <InfoOutlineIcon onClick={onOpen}/>
+        <InfoOutlineIcon onClick={onOpen} />
       </Flex>
       <Wrap alignItems={"center"}>
         <WrapItem>
@@ -161,21 +163,50 @@ function LulcLegend({ setLayerOpacity }) {
         </WrapItem>
       </Wrap>
       {/* Modal contenet */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Land Use/Land Cover</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <h1>Hello</h1>
+          <ModalBody textAlign={"justify"}>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Description:
+              </Text>
+              <Text>
+                A Land Use and Land Cover (LULC) map visually represents the
+                physical land surface and its usage, distinguishing between
+                natural and human-modified environments. It aids in
+                understanding spatial patterns essential for environmental
+                planning and management.
+              </Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Source:
+              </Text>
+              <Text>
+                <Link
+                  href="https://esa-worldcover.org/en"
+                  color={"green"}
+                  isExternal
+                >
+                  ESA Worldcover
+                </Link>
+              </Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Resolution:
+              </Text>
+              <Text>10 meter</Text>
+            </Flex>
+            <Flex alignContent={"center"}>
+              <Spacer />
+              <Image src={lulcImage} h={"30%"} w={"70%"} borderRadius={10}/>
+              <Spacer />
+            </Flex>
           </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

@@ -6,7 +6,7 @@ import CoverCropLegend from "../legends/CoverCropLegend";
 import CropHealthLegend from "../legends/CropHealthLegend";
 import SocLegend from "../legends/SocLegend";
 import LulcLegend from "../legends/LulcLegend";
-import ETLegend from "../legends/ETLegendcopy";
+import ETLegend from "../legends/ETLegend";
 
 import { GoChevronUp, GoChevronDown } from "react-icons/go";
 
@@ -34,7 +34,7 @@ function Styling({ switchState, drawing, setLayerOpacity, setSocVis }) {
         ml={minimized ? "auto" : "0"}
         display={totalTrue > 0 && (drawing == "no"||drawing == "ready to analyse") ? "flex" : "none"}
       >
-        <Text fontSize={16} fontWeight={700}>
+        <Text fontSize={16} fontWeight={700} m={1}>
           Legends
         </Text>
         <Spacer />

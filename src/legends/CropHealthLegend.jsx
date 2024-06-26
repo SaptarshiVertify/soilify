@@ -1,14 +1,5 @@
 import { useState } from "react";
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Flex,
   Spacer,
@@ -26,22 +17,34 @@ import {
   Square,
   Wrap,
   WrapItem,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Link,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
+import cropHealthImage from "../assets/legendImages/chealth.png";
+
 function CropHealthLegend({ setLayerOpacity }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
   // State to assign visibility of opacity slider section
-  const [isOpen, setOpen] = useState(false);
+  const [isOpacityOpen, setOpacityOpen] = useState(false);
 
   // Function to open and close the opacity slider section
   function handleOpacitySection() {
-    setOpen((prev) => !prev);
+    setOpacityOpen((prev) => !prev);
   }
   // Function to handle opacity change
   function handleOpacityChange(key, v) {
@@ -69,8 +72,8 @@ function CropHealthLegend({ setLayerOpacity }) {
           alt="Opacity"
         />
         <Box
-          w={isOpen ? "40%" : "0%"}
-          visibility={isOpen ? "visible" : "hidden"}
+          w={isOpacityOpen ? "40%" : "0%"}
+          visibility={isOpacityOpen ? "visible" : "hidden"}
           transition={"ease 0.2s"}
           overflow={"hidden"}
           m={1}
@@ -105,7 +108,8 @@ function CropHealthLegend({ setLayerOpacity }) {
             </Slider>
           </Flex>
         </Box>
-        <InfoOutlineIcon />
+        {/* Modal Button */}
+        <InfoOutlineIcon onClick={onOpen} />
       </Flex>
       <Wrap alignItems={"center"}>
         <WrapItem>
@@ -133,6 +137,50 @@ function CropHealthLegend({ setLayerOpacity }) {
           </Text>
         </WrapItem>
       </Wrap>
+      {/* Modal contenet */}
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Crop Health</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody textAlign={"justify"}>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Description:
+              </Text>
+              <Text>
+                A crop health map shows the vitality and condition of crops
+                across a landscape. Created from satellite imagery by analyzing
+                spectral signatures, it provides crucial, up-to-date information
+                for monitoring crop health and optimizing agricultural
+                practices.
+              </Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Source:
+              </Text>
+              <Text>Analysed using Sentinel-2 imagery.</Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Resolution:
+              </Text>
+              <Text>10 meter</Text>
+            </Flex>
+            <Flex alignContent={"center"}>
+              <Spacer />
+              <Image
+                src={cropHealthImage}
+                h={"30%"}
+                w={"70%"}
+                borderRadius={10}
+              />
+              <Spacer />
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

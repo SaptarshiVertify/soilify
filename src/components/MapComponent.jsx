@@ -225,10 +225,6 @@ function MapComponent({
         "crop type rabi",
         "cover crop",
         "crop health",
-        // Flood layers
-        "flood risk",
-        "flood map",
-        "stream order",
         // Miscellaneous
         "lulc",
         "evapotranspiration",

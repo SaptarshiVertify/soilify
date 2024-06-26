@@ -24,24 +24,36 @@ import {
   Image,
   Divider,
   Select,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Link,
 } from "@chakra-ui/react";
 
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
+import socImage from "../assets/legendImages/soc.png"
+
 function SocLegend({ setLayerOpacity, setSocVis }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
   const [sliderValue, setSliderValue] = useState(75);
   const [showTooltip, setShowTooltip] = useState(false);
   // State to assign visibility of opacity slider section
-  const [isOpen, setOpen] = useState(false);
+  const [isOpacityOpen, setOpacityOpen] = useState(false);
   // State to control selected visualisation
   const [selectedVis, setSelectedVis] = useState("soc 23");
 
   // Function to open and close the opacity slider section
   function handleOpacitySection() {
-    setOpen((prev) => !prev);
+    setOpacityOpen((prev) => !prev);
   }
   // Function to handle opacity change
   function handleOpacityChange(key, v) {
@@ -59,11 +71,12 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
   };
   return (
     <Box
-    bg="white"
-    borderRadius={5}
-    p={1}
-    boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
-    mb={0.5}>
+      bg="white"
+      borderRadius={5}
+      p={1}
+      boxShadow="0 4px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
+      mb={0.5}
+    >
       {/* Legend header */}
       <Flex alignItems="center" w={"100%"}>
         <Text fontSize={15}>Soil Organic Carbon</Text>
@@ -76,8 +89,8 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
         />
         {/* Opacity section */}
         <Box
-          w={isOpen ? "40%" : "0%"}
-          visibility={isOpen ? "visible" : "hidden"}
+          w={isOpacityOpen ? "40%" : "0%"}
+          visibility={isOpacityOpen ? "visible" : "hidden"}
           transition={"ease 0.2s"}
           overflow={"hidden"}
           m={1}
@@ -114,8 +127,8 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
             </Slider>
           </Flex>
         </Box>
-        {/* Info section */}
-        <InfoOutlineIcon />
+        {/* Modal Button */}
+        <InfoOutlineIcon onClick={onOpen} />
       </Flex>
       {/* Visualization options */}
       <Flex alignItems={"center"} m={1}>
@@ -139,41 +152,7 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
           SOC amount (ton/ha):
         </Text>
         {/* SOC 22 and SOC 2023 gradient */}
-        <Box
-          w="100%"
-          p={2}
-          display={selectedVis != "soc change" ? "block" : "none"}
-        >
-          <Box
-            h={"1vh"}
-            borderRadius={5}
-            bg="linear-gradient(to right, #f04438, #fec84b, #17b26a)"
-            mb={2}
-          />
-          <Flex justify="space-between">
-            <Text fontSize={10} fontWeight={450}>
-              9
-            </Text>
-            <Text fontSize={10} fontWeight={450}>
-              10.25
-            </Text>
-            <Text fontSize={10} fontWeight={450}>
-              11.5
-            </Text>
-            <Text fontSize={10} fontWeight={450}>
-              13.25
-            </Text>
-            <Text fontSize={10} fontWeight={450}>
-              15
-            </Text>
-          </Flex>
-        </Box>
-        {/* SOC change gradient */}
-        <Box
-          w="100%"
-          p={2}
-          display={selectedVis == "soc change" ? "block" : "none"}
-        >
+        <Box w="100%" p={2}>
           <Box
             h={"1vh"}
             borderRadius={5}
@@ -182,23 +161,79 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
           />
           <Flex justify="space-between">
             <Text fontSize={10} fontWeight={450}>
-              -1
+              {selectedVis == "soc change" ? -1 : 9}
             </Text>
             <Text fontSize={10} fontWeight={450}>
-              -0.5
+              {selectedVis == "soc change" ? -0.5 : 10.25}
             </Text>
             <Text fontSize={10} fontWeight={450}>
-              0
+              {selectedVis == "soc change" ? 0 : 11.5}
             </Text>
             <Text fontSize={10} fontWeight={450}>
-              0.75
+              {selectedVis == "soc change" ? 0.75 : 13.25}
             </Text>
             <Text fontSize={10} fontWeight={450}>
-              1.5
+              {selectedVis == "soc change" ? -1 : 15}
             </Text>
           </Flex>
         </Box>
       </Box>
+      {/* Modal contenet */}
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Soil Organic Carbon</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody textAlign={"justify"}>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Description:
+              </Text>
+              <Text>
+                A soil organic carbon (SOC) map shows the concentration of
+                organic carbon in soil across a landscape. The SOC was estimated
+                using machine learning (Random Forest) with multispectral
+                imagery and climatic data as inputs. This map is essential for
+                understanding soil health, carbon sequestration, and informing
+                sustainable land management practices.
+              </Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Satellite data inputs:
+              </Text>
+              <Text>
+                <Link
+                  href="https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD09GQ"
+                  color={"green"}
+                  isExternal
+                >
+                  MODIS
+                </Link>
+                ,
+                <Link
+                  href="https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR"
+                  color={"green"}
+                  isExternal
+                >
+                  ERA5 Reanalysis data
+                </Link>
+              </Text>
+            </Flex>
+            <Flex>
+              <Text fontWeight={600} mr={1}>
+                Resolution:
+              </Text>
+              <Text>250 meter</Text>
+            </Flex>
+            <Flex alignContent={"center"}>
+              <Spacer />
+              <Image src={socImage} h={"30%"} w={"70%"} borderRadius={10} />
+              <Spacer />
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
