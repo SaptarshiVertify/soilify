@@ -32,8 +32,6 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-import ctRabiImage from "../assets/legendImages/ctrabi.png"
-
 function CropTypeRabiLegend({ setLayerOpacity }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
@@ -159,11 +157,6 @@ function CropTypeRabiLegend({ setLayerOpacity }) {
                 Resolution:
               </Text>
               <Text>10 meter</Text>
-            </Flex>
-            <Flex alignContent={"center"}>
-              <Spacer />
-              <Image src={ctRabiImage} h={"30%"} w={"70%"} borderRadius={10}/>
-              <Spacer />
             </Flex>
           </ModalBody>
         </ModalContent>

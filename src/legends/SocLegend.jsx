@@ -39,8 +39,6 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-import socImage from "../assets/legendImages/soc.png"
-
 function SocLegend({ setLayerOpacity, setSocVis }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
@@ -225,11 +223,6 @@ function SocLegend({ setLayerOpacity, setSocVis }) {
                 Resolution:
               </Text>
               <Text>250 meter</Text>
-            </Flex>
-            <Flex alignContent={"center"}>
-              <Spacer />
-              <Image src={socImage} h={"30%"} w={"70%"} borderRadius={10} />
-              <Spacer />
             </Flex>
           </ModalBody>
         </ModalContent>

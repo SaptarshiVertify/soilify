@@ -32,8 +32,6 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-import etImage from "../assets/legendImages/et.png";
-
 function ETLegend({ setLayerOpacity }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const numbers = Array.from({ length: 10 }, (_, i) => i);
@@ -190,11 +188,6 @@ function ETLegend({ setLayerOpacity }) {
                 Resolution:
               </Text>
               <Text>10 meter</Text>
-            </Flex>
-            <Flex alignContent={"center"}>
-              <Spacer />
-              <Image src={etImage} h={"30%"} w={"70%"} borderRadius={10} />
-              <Spacer />
             </Flex>
           </ModalBody>
         </ModalContent>

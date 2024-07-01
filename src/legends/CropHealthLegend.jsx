@@ -32,8 +32,6 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 import opacityIcon from "../assets/contrast-01.png";
 
-import cropHealthImage from "../assets/legendImages/chealth.png";
-
 function CropHealthLegend({ setLayerOpacity }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // States to control slider value and tooltup label
@@ -167,16 +165,6 @@ function CropHealthLegend({ setLayerOpacity }) {
                 Resolution:
               </Text>
               <Text>10 meter</Text>
-            </Flex>
-            <Flex alignContent={"center"}>
-              <Spacer />
-              <Image
-                src={cropHealthImage}
-                h={"30%"}
-                w={"70%"}
-                borderRadius={10}
-              />
-              <Spacer />
             </Flex>
           </ModalBody>
         </ModalContent>
