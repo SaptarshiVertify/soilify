@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as turf from "@turf/turf";
-import { Spinner, Box } from "@chakra-ui/react";
+import { Spinner, Box, Button } from "@chakra-ui/react";
 import {
   BarChart,
   Bar,
@@ -8,7 +8,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   Cell,
   Label,
   ReferenceLine
@@ -18,6 +17,7 @@ import { color } from "framer-motion";
 const GraphComponent = ({ graph }) => {
   const [loading, setLoading] = useState(true);
   const [chartData, setChartData] = useState([]);
+  const [intersectedFeatures, setIntersectedFeatures] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -28,6 +28,7 @@ const GraphComponent = ({ graph }) => {
       let count = 0;
       const socFeats = graph["socFeatures"];
       const drawnPoly = graph["drawnPolygon"];
+      const newIntersectedFeatures = [];
 
       socFeats.forEach(function (feature) {
         const intersection = turf.intersect(
@@ -38,6 +39,11 @@ const GraphComponent = ({ graph }) => {
           soc22sum += feature.properties["soc_22"]; // Sum of all soc 22 values
           soc23sum += feature.properties["soc_23"]; // Sum of all soc 23 values
           chnsum += feature.properties["chn"]; // Sum of all soc change values
+
+          // Retain the properties of the original feature
+          intersection.properties = feature.properties;
+
+          newIntersectedFeatures.push(intersection);
         }
       });
 
@@ -65,6 +71,7 @@ const GraphComponent = ({ graph }) => {
         },
       ]);
 
+      setIntersectedFeatures(newIntersectedFeatures);
       setLoading(false);
     }
   }, [graph]);
@@ -94,6 +101,25 @@ const GraphComponent = ({ graph }) => {
   const originalWarn = console.warn;
   console.warn = () => {};
 
+  const downloadIntersectedFeatures = () => {
+    console.log('Download button clicked');
+    console.log(intersectedFeatures);
+    const geojson = {
+      type: "FeatureCollection",
+      features: intersectedFeatures
+    };
+
+    const blob = new Blob([JSON.stringify(geojson)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = 'intersected_features.geojson';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    console.log(downloadLink.href+"/download="+downloadLink.download);
+    document.body.removeChild(downloadLink);
+  };
+
   return (
     <>
       {loading ? (
@@ -101,29 +127,33 @@ const GraphComponent = ({ graph }) => {
           <Spinner size="xl" />
         </Box>
       ) : (
-        <BarChart
-          width={300}
-          height={200}
-          data={chartData}
-          margin={{ top: 5, right: 30}}
-        >
-          <CartesianGrid strokeDasharray="3 3"/>
-          <XAxis
-            dataKey="name"
-            tick={{ fontSize: 10, fontFamily: "Arial" }}
-            angle={10}
-            interval={0}
-          />
-          <YAxis tick={{ fontSize: 10, fontFamily: "Arial" }}/>
-          <Tooltip content={<CustomTooltip />} />
-          <ReferenceLine y={0} stroke="#000"/>
-          {/* Line at y=0 for negative values */}
-          <Bar dataKey="mean" barSize={30}>
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Bar>
-        </BarChart>
+        <>
+          <BarChart
+            width={300}
+            height={200}
+            data={chartData}
+            margin={{ top: 5, right: 30}}
+          >
+            <CartesianGrid strokeDasharray="3 3"/>
+            <XAxis
+              dataKey="name"
+              tick={{ fontSize: 10, fontFamily: "Arial" }}
+              angle={10}
+              interval={0}
+            />
+            <YAxis tick={{ fontSize: 10, fontFamily: "Arial" }}/>
+            <Tooltip content={<CustomTooltip />} />
+            <ReferenceLine y={0} stroke="#000"/>
+            <Bar dataKey="mean" barSize={30}>
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Bar>
+          </BarChart>
+          {/* <Button onClick={downloadIntersectedFeatures} mt={4} colorScheme="teal">
+            Download Intersected Features
+          </Button> */}
+        </>
       )}
     </>
   );
