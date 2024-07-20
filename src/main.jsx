@@ -8,9 +8,9 @@ import { isDesktopOrLaptop } from "./utils/deviceCheck";
 const isCompatible = isDesktopOrLaptop();
 
 const CompatibilityMessage = () => (
-  <Center h="100vh">
+  <Center h="100vh" bg={"maroon"}>
     <Box textAlign="center" p={5} borderWidth={1} borderRadius="lg">
-      <Text fontSize="2xl">Please use a desktop or laptop to access this application.</Text>
+      <Text fontSize="2xl" color={"white"}>Please use a desktop or laptop to access this application.</Text>
     </Box>
   </Center>
 );
